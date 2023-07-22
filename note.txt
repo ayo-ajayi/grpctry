@@ -1,0 +1,14 @@
+go get google.golang.org/protobuf
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+mkdir go-gen
+protoc --go_out=./gogen --go-grpc_out=./gogen *.proto
+go mod tidy
+
+
+
+python -m pip install grpcio
+python -m pip install grpcio-tools
+mkdir pygen
+python -m grpc_tools.protoc -I$(pwd) --python_out=./pygen --pyi_out=./pygen --grpc_python_out=./pygen $(pwd)/*.proto
